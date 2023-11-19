@@ -37,7 +37,7 @@ def convert_to_dict(result):
 app = quart_cors.cors(quart.Quart(__name__))
 
 @app.post("/ammehjelpen_retrieve")
-async def retrieve():
+async def retrieve_ammehjelpen():
     request = await quart.request.get_json(force=True)
     query = request["query"]
     result = ammehjelpen_retriever.get_relevant_documents(query)
@@ -46,7 +46,7 @@ async def retrieve():
     return quart.Response(response=json.dumps(output), status=200)
 
 @app.post("/brewshop_retrieve")
-async def retrieve():
+async def retrieve_brewshop():
     request = await quart.request.get_json(force=True)
     query = request["query"]
     result = brewshop_retriever.get_relevant_documents(query)
@@ -55,7 +55,7 @@ async def retrieve():
     return quart.Response(response=json.dumps(output), status=200)
 
 @app.post("/loplabbet_retrieve")
-async def retrieve():
+async def retrieve_loplabbet():
     request = await quart.request.get_json(force=True)
     query = request["query"]
     result = loplabbet_retriever.get_relevant_documents(query)
