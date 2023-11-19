@@ -1,0 +1,179 @@
+openapi: 3.0.0
+info:
+  title: GPT content and product retrieval API
+  description: An API that retrieves relevant documents for a given query.
+  version: "1.0.0"
+servers:
+  - url: https://brewshop-plugin-80b0b925974c.herokuapp.com
+paths:
+  /loplabbet_retrieve:
+    post:
+      operationId: loplabbet_post_retrieve
+      summary: Retrieve documents about running shoes products from Löplabbet
+      description: Retrieves documents relevant to the given query.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: The query string to retrieve relevant documents for.
+      responses:
+        '200':
+          description: A list of relevant documents
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    page_content:
+                      type: string
+                    metadata:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                        produktnavn: 
+                          type: string
+                        ratings_Stabilitet: 
+                          type: string
+                        ratings_Demping: 
+                          type: string
+                        ratings_Løpsfølelse:
+                          type: string
+                        sex:
+                          type: string
+                        category:
+                          type: string
+                        rank:
+                          type: integer
+
+        '400':
+          description: Bad request
+
+  /brewshop_retrieve:
+    post:
+      operationId: brewshop_post_retrieve
+      summary: Retrieve documents about brewing products from Brewshop.no
+      description: Retrieves documents relevant to the given query.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: The query string to retrieve relevant documents for.
+      responses:
+        '200':
+          description: A list of relevant documents
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    page_content:
+                      type: string
+                    metadata:
+                      type: object
+                      properties:
+                        updated:
+                          type: string
+                        url: 
+                          type: string
+                        domain: 
+                          type: string
+                        category: 
+                          type: string
+                        subcategory:
+                          type: string
+                        subcategory2:
+                          type: string
+                        subcategory3:
+                          type: string
+                        subcategory4:
+                          type: string
+                        product:
+                          type: string
+
+        '400':
+          description: Bad request
+
+  /ammehjelpen_retrieve:
+    post:
+      operationId: ammehjelpen_post_retrieve
+      summary: Retrieve documents about nursing and babies from Ammehjelpen.no
+      description: Retrieves documents relevant to the given query.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: The query string to retrieve relevant documents for.
+      responses:
+        '200':
+          description: A list of relevant documents
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    page_content:
+                      type: string
+                    metadata:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        link: 
+                          type: string
+                        category: 
+                          type: string
+
+        '400':
+          description: Bad request
+
+  /.well-known/ai-plugin.json:
+    get:
+      operationId: getPluginManifest
+      summary: Get plugin manifest
+      description: Returns the plugin manifest file.
+      responses:
+        '200':
+          description: Plugin manifest
+          content:
+            text/json:
+              schema:
+                type: string
+        '400':
+          description: Bad request
+
+  /openapi.yaml:
+    get:
+      operationId: getOpenAPI
+      summary: OpenAPI Specification
+      description: Returns the OpenAPI specification for this API.
+      responses:
+        '200':
+          description: OpenAPI specification in YAML format
+          content:
+            text/yaml:
+              schema:
+                type: string
+        '400':
+          description: Bad request
