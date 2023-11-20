@@ -4,6 +4,9 @@ import quart
 import quart_cors
 from quart import request
 import os
+import logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 
 from langchain.vectorstores import Chroma
 from langchain.embeddings import OpenAIEmbeddings
@@ -36,14 +39,30 @@ def convert_to_dict(result):
 
 app = quart_cors.cors(quart.Quart(__name__))
 
+#@app.post("/ammehjelpen_retrieve")
+#async def retrieve_ammehjelpen():
+#    request = await quart.request.get_json(force=True)
+#    query = request["query"]
+#    result = ammehjelpen_retriever.get_relevant_documents(query)
+#    output = convert_to_dict(result)
+#    # Convert Documents to 
+#    return quart.Response(response=json.dumps(output), status=200)
+
 @app.post("/ammehjelpen_retrieve")
 async def retrieve_ammehjelpen():
-    request = await quart.request.get_json(force=True)
-    query = request["query"]
+    request_data = await quart.request.get_json(force=True)
+    source_ip = request.remote_addr  # Get source IP
+    logging.info(f"Request from {source_ip}: {request_data}")  # Log request payload and IP
+
+    query = request_data["query"]
     result = ammehjelpen_retriever.get_relevant_documents(query)
     output = convert_to_dict(result)
-    # Convert Documents to 
-    return quart.Response(response=json.dumps(output), status=200)
+
+    response_data = json.dumps(output)
+    logging.info(f"Response: {response_data}")  # Log response
+
+    return quart.Response(response=response_data, status=200)
+
 
 @app.post("/brewshop_retrieve")
 async def retrieve_brewshop():

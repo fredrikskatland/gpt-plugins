@@ -4,7 +4,7 @@ info:
   description: An API that retrieves relevant documents for a given query.
   version: "1.0.0"
 servers:
-  - url: https://brewshop-plugin-80b0b925974c.herokuapp.com
+  - url: https://gpt-plugin-api-f580f0e41341.herokuapp.com
 paths:
   /loplabbet_retrieve:
     post:
