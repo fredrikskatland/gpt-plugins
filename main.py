@@ -66,21 +66,33 @@ async def retrieve_ammehjelpen():
 
 @app.post("/brewshop_retrieve")
 async def retrieve_brewshop():
-    request = await quart.request.get_json(force=True)
-    query = request["query"]
+    request_data = await quart.request.get_json(force=True)
+    source_ip = request.remote_addr  # Get source IP
+    logging.info(f"Request from {source_ip}: {request_data}")  # Log request payload and IP
+
+    query = request_data["query"]
     result = brewshop_retriever.get_relevant_documents(query)
     output = convert_to_dict(result)
-    # Convert Documents to 
-    return quart.Response(response=json.dumps(output), status=200)
+
+    response_data = json.dumps(output)
+    logging.info(f"Response: {response_data}")  # Log response
+
+    return quart.Response(response=response_data, status=200)
 
 @app.post("/loplabbet_retrieve")
 async def retrieve_loplabbet():
-    request = await quart.request.get_json(force=True)
-    query = request["query"]
+    request_data = await quart.request.get_json(force=True)
+    source_ip = request.remote_addr  # Get source IP
+    logging.info(f"Request from {source_ip}: {request_data}")  # Log request payload and IP
+
+    query = request_data["query"]
     result = loplabbet_retriever.get_relevant_documents(query)
     output = convert_to_dict(result)
-    # Convert Documents to 
-    return quart.Response(response=json.dumps(output), status=200)
+
+    response_data = json.dumps(output)
+    logging.info(f"Response: {response_data}")  # Log response
+
+    return quart.Response(response=response_data, status=200)
 
 @app.get("/.well-known/ai-plugin.json")
 async def plugin_manifest():
