@@ -5,3 +5,4 @@ chromadb
 openai
 tiktoken
 hypercorn
+langchain-community
