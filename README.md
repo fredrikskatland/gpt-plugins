@@ -61,3 +61,4 @@ To use the API, send a POST request to the desired endpoint with a JSON payload 
 {
   "query": "best running shoes for marathons"
 }
+
